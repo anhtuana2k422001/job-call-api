@@ -13,12 +13,14 @@ public class JobCallApiApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(JobCallApiApplication.class, args);
-		LOGGGER.info("******************** JobCallApiApplication started ******************** ");
+		LOGGER.info("******************** JobCallApiApplication started ******************** ");
 
 		// quartz
 		SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
-		String time = "0/10 * * * * ?"; // 10s
+		String time = "0 */10 * * * ?"; // 10p a times
+
+		String time15 = "0/15 * * * * ?";
 
 		try{
 			// jobDetail
@@ -29,7 +31,7 @@ public class JobCallApiApplication {
 					.build();
 
 			Trigger jobTrigger =  TriggerBuilder.newTrigger().withIdentity("RUN_QUARTZ", "JOB_GROUP")
-					.startNow().withSchedule(CronScheduleBuilder.cronSchedule(time))
+					.startNow().withSchedule(CronScheduleBuilder.cronSchedule(time15))
 					.build();
 
 			Scheduler scheduler = schedulerFactory.getScheduler();
@@ -37,7 +39,7 @@ public class JobCallApiApplication {
 			scheduler.start();
 
 		}catch(SchedulerException e) {
-			LOGGGER.error("Scheduler error");
+			LOGGER.error("Scheduler error");
         }
 
 
