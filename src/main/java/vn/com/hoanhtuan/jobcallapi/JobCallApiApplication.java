@@ -20,8 +20,6 @@ public class JobCallApiApplication {
 
 		String time = "0 */10 * * * ?"; // 10p a times
 
-		String time15 = "0/15 * * * * ?";
-
 		try{
 			// jobDetail
 			JobDetail jobDetail = JobBuilder.newJob().ofType(CallApi.class)
@@ -31,7 +29,7 @@ public class JobCallApiApplication {
 					.build();
 
 			Trigger jobTrigger =  TriggerBuilder.newTrigger().withIdentity("RUN_QUARTZ", "JOB_GROUP")
-					.startNow().withSchedule(CronScheduleBuilder.cronSchedule(time15))
+					.startNow().withSchedule(CronScheduleBuilder.cronSchedule(time))
 					.build();
 
 			Scheduler scheduler = schedulerFactory.getScheduler();
